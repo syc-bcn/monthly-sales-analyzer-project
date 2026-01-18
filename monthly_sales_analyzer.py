@@ -1,4 +1,3 @@
-# Example data
 sales_data = [
     {"day": 1, "product_a": 202, "product_b": 142, "product_c": 164},
     {"day": 2, "product_a": 206, "product_b": 121, "product_c": 338},
@@ -23,28 +22,85 @@ sales_data = [
 ]
 
 def total_sales_by_product(data, product_key):
-    """Calculates the total sales of a specific product in 30 days."""
-    pass
+    total = 0
+
+    for day in data:
+        total = total + day[product_key]
+
+    return total
 
 
 def average_daily_sales(data, product_key):
-    """Calculates the average daily sales of a specific product."""
-    pass
+    total = 0
+    count = 0
+
+    for day in data:
+        total = total + day[product_key]
+        count = count + 1
+
+    if count == 0:
+        return 0
+
+    return total / count
 
 
 def best_selling_day(data):
-    """Finds the day with the highest total sales."""
-    pass
+    best_day = None
+    highest_total = 0
+
+    for day in data:
+        daily_total = 0
+
+        for key in day:
+            if key != "day":
+                daily_total = daily_total + day[key]
+
+        if daily_total > highest_total:
+            highest_total = daily_total
+            best_day = day["day"]
+
+    return best_day
 
 
 def days_above_threshold(data, product_key, threshold):
-    """Counts how many days the sales of a product exceeded a given threshold."""
-    pass
+    count = 0
+
+    for day in data:
+        if day[product_key] > threshold:
+            count = count + 1
+
+    return count
 
 
 def top_product(data):
-    """Determines which product had the highest total sales in 30 days."""
-    pass
+    # Step 1: collect product names
+    product_keys = []
+
+    for key in data[0]:
+        if key != "day":
+            product_keys.append(key)
+
+    # Step 2: calculate totals
+    totals = {}
+
+    for product in product_keys:
+        total = 0
+
+        for day in data:
+            total = total + day[product]
+
+        totals[product] = total
+
+    # Step 3: find the product with highest sales
+    best_product = None
+    highest_sales = 0
+
+    for product in totals:
+        if totals[product] > highest_sales:
+            highest_sales = totals[product]
+            best_product = product
+
+    return best_product
 
 
 
